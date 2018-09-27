@@ -1,0 +1,35 @@
+{
+  "name": "generator-hljs",
+  "version": "0.0.0",
+  "description": "Yeoman generator for Highlight.js",
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "eslint": "eslint generators/**/*.js",
+    "precommit": "npm run test",
+    "test": "npm run eslint"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "highlight.js",
+    "hljs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idleberg/generator-hljs"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "globby": "^8.0.1",
+    "update-notifier": "^2.5.0",
+    "yeoman-generator": "^3.1.1",
+    "yosay": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.4.0",
+    "husky": "^1.0.0"
+  }
+}
