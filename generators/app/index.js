@@ -23,11 +23,17 @@ function getModuleDir() {
 
   const yarnDir = join(yarnModules(), 'node_modules', 'highlight.js');
 
-   if (existsSync(yarnDir)) {
+  if (existsSync(yarnDir)) {
     return yarnDir;
   }
 
-  throw 'highlight.js not found in global modules';
+  const localDir = join(__dirname, '..', '..', 'node_modules', 'highlight.js');
+
+  if (existsSync(localDir)) {
+    return yarnDir;
+  }
+
+  throw 'Error: highlight.js not found in node_modules';
 }
 
 function getLanguages() {
