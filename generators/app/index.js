@@ -12,6 +12,8 @@ const { existsSync } = require('fs');
 // Is there a newer version of this generator?
 updateNotifier({ pkg: pkg }).notify();
 
+const hljsDir = getModuleDir();
+
 function getModuleDir() {
   const npmDir = join(globalModules, 'highlight.js');
 
@@ -25,11 +27,11 @@ function getModuleDir() {
     return yarnDir;
   }
 
-  return process.cwd();
+  throw 'highlight.js not found in global modules';
 }
 
 function getLanguages() {
-  const languagesPath = join(getModuleDir(), 'src', 'languages');
+  const languagesPath = join(hljsDir, 'src', 'languages');
 
   return globby(`${languagesPath}/*.js`).then( longPaths => {
     const languages = longPaths.map( longPath => {
