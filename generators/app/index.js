@@ -1,18 +1,35 @@
 const Generator = require('yeoman-generator');
 const pkg = require('../../package.json');
 
+const globalModules = require('global-modules');
 const globby = require('globby');
 const updateNotifier = require('update-notifier');
+const yarnModules = require('yarn-global-modules');
 const yosay = require('yosay');
 const { basename, join } = require('path');
+const { existsSync } = require('fs');
 
 // Is there a newer version of this generator?
 updateNotifier({ pkg: pkg }).notify();
 
-const hljsDir = join(__dirname, '..', '..', 'node_modules', 'highlight.js');
+function getModuleDir() {
+  const npmDir = join(globalModules, 'highlight.js');
+
+  if (existsSync(npmDir)) {
+    return npmDir;
+  }
+
+  const yarnDir = join(yarnModules(), 'node_modules', 'highlight.js');
+
+   if (existsSync(yarnDir)) {
+    return yarnDir;
+  }
+
+  return process.cwd();
+}
 
 function getLanguages() {
-  const languagesPath = join(hljsDir, 'src', 'languages');
+  const languagesPath = join(getModuleDir(), 'src', 'languages');
 
   return globby(`${languagesPath}/*.js`).then( longPaths => {
     const languages = longPaths.map( longPath => {
