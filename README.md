@@ -19,10 +19,10 @@ yarn global add yo || npm install -g yo
 
 ## Installation
 
- Use your preferred package manager to install this generator
+Use `npm` to install this generator
 
 ```sh
-yarn global add generator-hljs || npm i generator-hljs -g
+npm i generator-hljs -g
 ```
 
 ## Usage
