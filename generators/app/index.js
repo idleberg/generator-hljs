@@ -39,7 +39,6 @@ function getModuleDir() {
 function getLanguages() {
   const languagesPath = join(hljsDir, 'src', 'languages');
 
-    console.log(languagesPath);
   return globby(`${languagesPath}/*.js`).then( longPaths => {
     const languages = longPaths.map( longPath => {
       return basename(longPath, '.js');
