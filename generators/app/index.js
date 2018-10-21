@@ -30,7 +30,7 @@ function getModuleDir() {
   const localDir = join(__dirname, '..', '..', 'node_modules', 'highlight.js');
 
   if (existsSync(localDir)) {
-    return yarnDir;
+    return localDir;
   }
 
   throw 'Error: highlight.js not found in node_modules';
@@ -39,6 +39,7 @@ function getModuleDir() {
 function getLanguages() {
   const languagesPath = join(hljsDir, 'src', 'languages');
 
+    console.log(languagesPath);
   return globby(`${languagesPath}/*.js`).then( longPaths => {
     const languages = longPaths.map( longPath => {
       return basename(longPath, '.js');
