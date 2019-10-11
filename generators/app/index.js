@@ -1,15 +1,41 @@
 const Generator = require('yeoman-generator');
 const pkg = require('../../package.json');
 
+const globalModules = require('global-modules');
 const globby = require('globby');
 const updateNotifier = require('update-notifier');
+const yarnModules = require('yarn-global-modules');
 const yosay = require('yosay');
-const { basename, join } = require('path');
+const { basename, join, resolve } = require('path');
+const { existsSync } = require('fs');
 
 // Is there a newer version of this generator?
 updateNotifier({ pkg: pkg }).notify();
 
-const hljsDir = join(__dirname, '..', '..', 'node_modules', 'highlight.js');
+// console.log(require.resolve('highlight.js'))
+const hljsDir = getModuleDir();
+
+function getModuleDir() {
+  const npmDir = resolve(globalModules, 'generator-hljs/node_modules', 'highlight.js');
+
+  if (existsSync(npmDir)) {
+    return npmDir;
+  }
+
+  const yarnDir = resolve(yarnModules(), 'node_modules', 'highlight.js');
+
+  if (existsSync(yarnDir)) {
+    return yarnDir;
+  }
+
+  const localDir = resolve(__dirname, '..', '..', 'node_modules', 'highlight.js');
+
+  if (existsSync(localDir)) {
+    return localDir;
+  }
+
+  throw 'Error: highlight.js not found in node_modules';
+}
 
 function getLanguages() {
   const languagesPath = join(hljsDir, 'src', 'languages');
